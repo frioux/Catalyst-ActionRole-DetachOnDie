@@ -26,23 +26,25 @@ The root page (/)
 
 =cut
 
-sub index :Path :Args(0) {
-    my ( $self, $c ) = @_;
+sub base : Chained('/') PathPart('') CaptureArgs(0) ActionClass('Test') {
+     my ( $self, $c ) = @_;
 
-    # Hello World
-    $c->response->body( $c->welcome_message );
+    $c->log->warn("In base");
+    die("base");
 }
 
-=head2 default
+sub foo : Chained('base') PathPart('') CaptureArgs(0) ActionClass9('Test'){
+     my ( $self, $c ) = @_;
 
-Standard 404 error page
+    $c->log->warn("In foo");
+#    die("foo");
+}
 
-=cut
-
-sub default :Path {
+sub index : Chained('foo') PathPart('') Args(0) ActionClass('Test'){
     my ( $self, $c ) = @_;
-    $c->response->body( 'Page not found' );
-    $c->response->status(404);
+
+    $c->log->warn("In index");
+    die("Index");
 }
 
 =head2 end
