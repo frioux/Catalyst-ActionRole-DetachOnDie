@@ -3,6 +3,8 @@ use strict;
 use warnings;
 use Test::More;
 
+use lib 't/lib';
+
 use Catalyst::Test 'Foo';
 
 is( get('/success'), 'base, success', 'Successful chain works');
