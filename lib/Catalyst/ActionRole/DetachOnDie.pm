@@ -1,7 +1,6 @@
-package Catalyst::Action::Test;
-use Moose;
+package Catalyst::ActionRole::DetachOnDie;
+use Moose::Role;
 use Try::Tiny;
-extends 'Catalyst::Action';
 
 around execute => sub {
    my ($orig, $self, $controller, $c, @args) = @_;
@@ -15,6 +14,8 @@ around execute => sub {
       undef
    }
 };
+
+no Moose::Role;
 
 1;
 
