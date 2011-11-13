@@ -4,67 +4,46 @@ use namespace::autoclean;
 
 BEGIN { extends 'Catalyst::Controller' }
 
-#
-# Sets the actions in this controller to be registered with no prefix
-# so they function identically to actions created in MyApp.pm
-#
 __PACKAGE__->config(namespace => '');
-
-=head1 NAME
-
-Foo::Controller::Root - Root Controller for Foo
-
-=head1 DESCRIPTION
-
-[enter your description here]
-
-=head1 METHODS
-
-=head2 index
-
-The root page (/)
-
-=cut
 
 sub base : Chained('/') PathPart('') CaptureArgs(0) ActionClass('Test') {
      my ( $self, $c ) = @_;
 
-    $c->log->warn("In base");
-    die("base");
+    $c->stash->{body} = ['base'];
 }
 
-sub foo : Chained('base') PathPart('') CaptureArgs(0) ActionClass9('Test'){
+sub success : Chained('base') PathPart('success') Args(0) ActionClass('Test'){
      my ( $self, $c ) = @_;
 
-    $c->log->warn("In foo");
-#    die("foo");
+    push @{$c->stash->{body}}, 'success';
 }
 
-sub index : Chained('foo') PathPart('') Args(0) ActionClass('Test'){
-    my ( $self, $c ) = @_;
+sub fail : Chained('base') PathPart('fail') Args(0) ActionClass('Test'){
+     my ( $self, $c ) = @_;
 
-    $c->log->warn("In index");
-    die("Index");
+    die 'failed';
+    push @{$c->stash->{body}}, 'fail';
 }
 
-=head2 end
+sub middle_fail_1 : Chained('base') PathPart('middle_fail') CaptureArgs(0) ActionClass('Test'){
+     my ( $self, $c ) = @_;
 
-Attempt to render a view, if needed.
+    die 'failed';
+    push @{$c->stash->{body}}, 'middle_fail_1';
+}
 
-=cut
+sub middle_fail_2 : Chained('middle_fail_1') PathPart('') Args(0) ActionClass('Test'){
+     my ( $self, $c ) = @_;
 
-sub end : ActionClass('RenderView') {}
+    push @{$c->stash->{body}}, 'middle_fail_2';
+}
 
-=head1 AUTHOR
+sub end : ActionClass('RenderView') {
+   my ($self, $c) = @_;
 
-Tomas Doran
-
-=head1 LICENSE
-
-This library is free software. You can redistribute it and/or modify
-it under the same terms as Perl itself.
-
-=cut
+   $c->clear_errors;
+   $c->response->body(join ', ', @{$c->stash->{body}});
+}
 
 __PACKAGE__->meta->make_immutable;
 

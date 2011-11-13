@@ -5,6 +5,8 @@ use Test::More;
 
 use Catalyst::Test 'Foo';
 
-ok( request('/')->is_success, 'Request should succeed' );
+is( get('/success'), 'base, success', 'Successful chain works');
+is( get('/fail'), 'base', 'Die in base correctly stops chain');
+is( get('/middle_fail'), 'base', 'Die in middle of chain works');
 
 done_testing();
