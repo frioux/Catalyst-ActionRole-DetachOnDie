@@ -2,6 +2,8 @@ package Catalyst::ActionRole::DetachOnDie;
 use Moose::Role;
 use Try::Tiny;
 
+# ABSTRACT: If something dies in a chain, stop the chain
+
 around execute => sub {
    my ($orig, $self, $controller, $c, @args) = @_;
 
