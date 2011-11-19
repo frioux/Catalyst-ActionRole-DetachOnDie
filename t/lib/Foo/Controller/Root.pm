@@ -38,6 +38,38 @@ sub middle_fail_2 : Chained('middle_fail_1') PathPart('') Args(0) Does('DetachOn
     push @{$c->stash->{body}}, 'middle_fail_2';
 }
 
+sub base_base : Chained('/') PathPart('base') CaptureArgs(0) ActionClass('DetachOnDie') {
+     my ( $self, $c ) = @_;
+
+    $c->stash->{body} = ['base_base'];
+}
+
+sub base_success : Chained('base_base') PathPart('success') Args(0) ActionClass('DetachOnDie'){
+     my ( $self, $c ) = @_;
+
+    push @{$c->stash->{body}}, 'success';
+}
+
+sub base_fail : Chained('base_base') PathPart('fail') Args(0) ActionClass('DetachOnDie'){
+     my ( $self, $c ) = @_;
+
+    die 'failed';
+    push @{$c->stash->{body}}, 'fail';
+}
+
+sub base_middle_fail_1 : Chained('base_base') PathPart('middle_fail') CaptureArgs(0) ActionClass('DetachOnDie'){
+     my ( $self, $c ) = @_;
+
+    die 'failed';
+    push @{$c->stash->{body}}, 'middle_fail_1';
+}
+
+sub base_middle_fail_2 : Chained('base_middle_fail_1') PathPart('') Args(0) ActionClass('DetachOnDie'){
+     my ( $self, $c ) = @_;
+
+    push @{$c->stash->{body}}, 'middle_fail_2';
+}
+
 sub end : ActionClass('RenderView') {
    my ($self, $c) = @_;
 

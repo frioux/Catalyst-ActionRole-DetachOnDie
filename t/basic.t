@@ -11,4 +11,8 @@ is( get('/success'), 'base, success', 'Successful chain works');
 is( get('/fail'), 'base', 'Die in base correctly stops chain');
 is( get('/middle_fail'), 'base', 'Die in middle of chain works');
 
+is( get('/base/success'), 'base_base, success', 'Base Successful chain works');
+is( get('/base/fail'), 'base_base', 'Base Die in base correctly stops chain');
+is( get('/base/middle_fail'), 'base_base', 'Base Die in middle of chain works');
+
 done_testing();
