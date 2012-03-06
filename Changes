@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - fix huge bug where $c->error wasn't set correctly (good catch xinming)
 
 0.001001  2012-01-30 16:43:14 CST6CDT
 

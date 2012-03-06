@@ -11,8 +11,8 @@ around execute => sub {
       $self->$orig($controller, $c, @args)
    } catch {
       $c->log->error("Caught exception: $_ detaching");
-      $c->detach;
       $c->error([ @{ $c->error }, $_ ]);
+      $c->detach;
       undef
    }
 };
