@@ -24,6 +24,13 @@ sub fail : Chained('base') PathPart('fail') Args(0) Does('DetachOnDie'){
     push @{$c->stash->{body}}, 'fail';
 }
 
+sub fail_ctx_error : Chained('base') PathPart('fail_ctx_error') Args(0) Does('DetachOnDie'){
+     my ( $self, $c ) = @_;
+
+    die 'failed';
+    push @{$c->stash->{body}}, 'fail_ctx_error';
+}
+
 sub middle_fail_1 : Chained('base') PathPart('middle_fail') CaptureArgs(0) Does('DetachOnDie'){
      my ( $self, $c ) = @_;
 
@@ -72,6 +79,10 @@ sub base_middle_fail_2 : Chained('base_middle_fail_1') PathPart('') Args(0) Acti
 sub end : ActionClass('RenderView') {
    my ($self, $c) = @_;
 
+   if ($c->action->name eq 'fail_ctx_error') {
+       my $error_count = @{$c->error};
+       unshift @{$c->stash->{body}}, $error_count;
+   }
    $c->clear_errors;
    $c->response->body(join ', ', @{$c->stash->{body}});
 }
