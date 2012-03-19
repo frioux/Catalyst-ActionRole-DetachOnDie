@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - allow explicit $c->detach exceptions to pass through without
+    any action being taken (bphillips)
 
 0.001002  2012-03-06 14:25:48 CST6CDT
   - fix huge bug where $c->error wasn't set correctly (good catch xinming)
