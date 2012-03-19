@@ -17,4 +17,8 @@ is( get('/base/middle_fail'), 'base_base', 'Base Die in middle of chain works');
 
 is( get('/fail_ctx_error'), '1, base', 'ctx error preserved when die in Chain worked.');
 
+my $res = request('/base/explicit_detach/endpoint');
+is( $res->content, 'base_base, explicit_detach', 'explicit detach does not trigger error catching');
+is( $res->header('X-DetachOnDie-Caught'), 0, 'exception not caught by action role');
+
 done_testing();
