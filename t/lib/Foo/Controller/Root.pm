@@ -76,6 +76,19 @@ sub base_middle_fail_2 : Chained('base_middle_fail_1') PathPart('') Args(0) Acti
     push @{$c->stash->{body}}, 'middle_fail_2';
 }
 
+sub explicit_detach : Chained('base_base') PathPart('explicit_detach') CaptureArgs(0) ActionClass('DetachOnDie') {
+  my($self, $c) = @_;
+  push @{$c->stash->{body}}, 'explicit_detach';
+  $c->res->redirect('/success');
+  $c->detach;
+}
+
+sub explicit_detach_endpoint : Chained('explicit_detach') PathPart('endpoint') Args(0) {
+  my($self, $c) = @_;
+  push @{$c->stash->{body}}, 'endpoint';
+  return;
+}
+
 sub end : ActionClass('RenderView') {
    my ($self, $c) = @_;
 
@@ -83,6 +96,7 @@ sub end : ActionClass('RenderView') {
        my $error_count = @{$c->error};
        unshift @{$c->stash->{body}}, $error_count;
    }
+   $c->res->header('X-DetachOnDie-Caught', scalar(@{ $c->error }));
    $c->clear_errors;
    $c->response->body(join ', ', @{$c->stash->{body}});
 }
