@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.001003  2012-03-20 13:43:35 America/Chicago
   - allow explicit $c->detach exceptions to pass through without
     any action being taken (bphillips)
 
