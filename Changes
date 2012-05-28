@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.001004  2012-05-28 09:00:31 America/Chicago
   - allow $c->go exceptions to pass (Aristotle Pagaltzis)
 
 0.001003  2012-03-20 13:43:35 America/Chicago
