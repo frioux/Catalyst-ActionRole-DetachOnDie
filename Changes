@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - allow $c->go exceptions to pass (Aristotle Pagaltzis)
 
 0.001003  2012-03-20 13:43:35 America/Chicago
   - allow explicit $c->detach exceptions to pass through without

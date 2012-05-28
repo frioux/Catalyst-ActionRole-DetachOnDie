@@ -11,7 +11,7 @@ around execute => sub {
    try {
       $self->$orig($controller, $c, @args)
    } catch {
-      if(blessed($_) && $_->isa('Catalyst::Exception::Detach')){
+      if(blessed($_) && ($_->isa('Catalyst::Exception::Detach') || $_->isa('Catalyst::Exception::Go'))){
         die $_; # re-throw explicit detach
       }
       $c->log->error("Caught exception: $_ detaching");
