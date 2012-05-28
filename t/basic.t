@@ -21,4 +21,8 @@ my $res = request('/base/explicit_detach/endpoint');
 is( $res->content, 'base_base, explicit_detach', 'explicit detach does not trigger error catching');
 is( $res->header('X-DetachOnDie-Caught'), 0, 'exception not caught by action role');
 
+my $res = request('/pitch_go');
+is( $res->content, 'base, pitched, caught', 'Using ->go works');
+is( $res->header('X-DetachOnDie-Caught'), 0, '... and rethrows the exception untouched');
+
 done_testing();

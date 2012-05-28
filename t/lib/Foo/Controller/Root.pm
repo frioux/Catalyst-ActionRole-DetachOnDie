@@ -89,6 +89,18 @@ sub explicit_detach_endpoint : Chained('explicit_detach') PathPart('endpoint') A
   return;
 }
 
+sub pitch_go : Chained('base') Args(0) ActionClass('DetachOnDie') {
+    my ( $self, $c ) = @_;
+    push @{$c->stash->{body}}, 'pitched';
+    $c->go('/catch_go');
+}
+
+sub catch_go : Action {
+    my ( $self, $c ) = @_;
+    push @{$c->stash->{body}}, 'caught';
+}
+
+
 sub end : ActionClass('RenderView') {
    my ($self, $c) = @_;
 
