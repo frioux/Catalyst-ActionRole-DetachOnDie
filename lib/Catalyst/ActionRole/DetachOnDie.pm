@@ -3,7 +3,7 @@ use Moose::Role;
 use Try::Tiny;
 use Scalar::Util qw(blessed);
 
-# ABSTRACT: If something dies in a chain, stop the chain
+# ABSTRACT: If something dies in a chain, stop the chain. DEPRECATED IN FAVOR OF CATALYST 5.90040
 
 around execute => sub {
    my ($orig, $self, $controller, $c, @args) = @_;
@@ -26,6 +26,11 @@ no Moose::Role;
 1;
 
 =pod
+
+=head1 DEPRECATED
+
+Instead of using this module you should use Catalyst 5.90040 and set
+the C<abort_chain_on_error_fix> flag.
 
 =head1 SYNOPSIS
 

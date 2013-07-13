@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - DEPRECATED for Catalyst 5.90040
 
 0.001005  2012-11-17 17:12:13 CST6CDT
   - Put MetaYAML back in dist
