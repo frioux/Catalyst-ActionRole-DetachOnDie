@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.001006  2013-07-12 19:24:34 CST6CDT
   - DEPRECATED for Catalyst 5.90040
 
 0.001005  2012-11-17 17:12:13 CST6CDT
